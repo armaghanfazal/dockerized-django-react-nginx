@@ -4,6 +4,9 @@ services:
       dockerfile: nginx/Dockerfile
     ports: 
       - 8080:80
+    depends_on:
+      - app
+
     
   app:
     build: .
@@ -12,6 +15,8 @@ services:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - db
 
   db:
     image: postgres:14.4
