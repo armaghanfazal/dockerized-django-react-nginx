@@ -1,0 +1,28 @@
+services:
+  web:
+    build: 
+      dockerfile: nginx/Dockerfile
+    ports: 
+      - 8080:80
+    
+  app:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  db:
+    image: postgres:14.4
+    hostname: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - "db-volume:/var/lib/postgresql/data"
+  
+volumes: 
+  db-volume:
+
